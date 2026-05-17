@@ -1,7 +1,3 @@
-const [, , status, issueNumber, method] = process.argv;
-
-if (status === 'success') {
-  console.log(`::warning title=${method} Succeeded::Comment posted on issue #${issueNumber}`);
-} else {
-  console.log(`::error title=${method} Failed::Failed to post comment on issue #${issueNumber}`);
-}
+const [, , annotationType, consoleMethod] = process.argv;
+const message = `::${annotationType} title=${annotationType} via console.${consoleMethod}::Testing ${annotationType} annotation via console.${consoleMethod}`;
+console[consoleMethod](message);
