@@ -1,6 +1,6 @@
 name: Create a comment on new issues
 
-on: 
+on:
   issues:
     types: [opened]
 
@@ -10,6 +10,7 @@ jobs:
     permissions:
       issues: write
     steps:
+      - uses: actions/checkout@v4
       - name: "dump github event"
         run: echo '${{ toJson(github.event) }}' | jq
         shell: bash
@@ -24,11 +25,19 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-or-update-comment
           reactions: '+1'
+      - name: Annotate success
+        if: success()
+        run: node scripts/annotate.js success ${{ github.event.issue.number }} "Comment-Action"
+      - name: Annotate failure
+        if: failure()
+        run: node scripts/annotate.js failure ${{ github.event.issue.number }} "Comment-Action"
+
   comment-with-api:
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
+      - uses: actions/checkout@v4
       - name: Create comment with API
         run: |
           gh api -X POST \
@@ -39,4 +48,9 @@ jobs:
           ORGANISATION: ${{github.repository_owner}}
           REPOSITORY: ${{github.event.repository.name}}
           ISSUE_NUMBER: ${{github.event.issue.number}}
-
+      - name: Annotate success
+        if: success()
+        run: node scripts/annotate.js success ${{ github.event.issue.number }} "API-Comment"
+      - name: Annotate failure
+        if: failure()
+        run: node scripts/annotate.js failure ${{ github.event.issue.number }} "API-Comment"
