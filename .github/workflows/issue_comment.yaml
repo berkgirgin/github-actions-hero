@@ -27,22 +27,22 @@ jobs:
           reactions: '+1'
       - name: "warning via console.log"
         if: always()
-        run: node scripts/annotate.js warning log
+        run: node scripts/annotate.js warning log scripts/annotate.js 1 1 "warning-via-log"
       - name: "warning via console.warn"
         if: always()
-        run: node scripts/annotate.js warning warn
+        run: node scripts/annotate.js warning warn scripts/annotate.js 1 1 "warning-via-warn"
       - name: "warning via console.error"
         if: always()
-        run: node scripts/annotate.js warning error
+        run: node scripts/annotate.js warning error scripts/annotate.js 1 1 "warning-via-error"
       - name: "error via console.log"
         if: always()
-        run: node scripts/annotate.js error log
+        run: node scripts/annotate.js error log scripts/annotate.js 1 1 "error-via-log"
       - name: "error via console.warn"
         if: always()
-        run: node scripts/annotate.js error warn
+        run: node scripts/annotate.js error warn scripts/annotate.js 1 1 "error-via-warn"
       - name: "error via console.error"
         if: always()
-        run: node scripts/annotate.js error error
+        run: node scripts/annotate.js error error scripts/annotate.js 1 1 "error-via-error"
 
   comment-with-api:
     runs-on: ubuntu-latest
